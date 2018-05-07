@@ -1,5 +1,6 @@
 import requests
 import bs4
+import dateparser
 
 
 def fetch_habr_feed(pages=5):
@@ -30,7 +31,10 @@ def parse_habr_page(raw_page):
     for article_block in soup.find_all('article', {'class': 'post post_preview'}):
         title_block = article_block.find('a', {'class': 'post__title_link'})
         date_block = article_block.find('span', {'class': 'post__time'})
-        articles_info.append({'title': title_block.contents[0]})
+        articles_info.append({
+            'title': title_block.contents[0],
+            'publication_date_time': dateparser.parse(date_block.text)  # Сделать обработку исключения ValueError
+        })
     return articles_info
 
 
