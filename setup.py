@@ -4,9 +4,9 @@ from os.path import join, dirname
 from setuptools import setup, find_packages
 
 setup(
-    name='habr_parser',
+    name='habr_art_stat',
     version='0.0.1',
-    description='Приложение для сбора статистики',
+    description='Приложение для сбора статистики о словах в статьях habr.com',
     long_description=open(join(dirname(__file__), 'README.rst')).read(),
     author='nikolnikon',
     classifiers=[
@@ -21,6 +21,6 @@ setup(
         'bs4 ~= 0.0',
     ],
     entry_points={
-        'console_scripts': ['habr_parser=habr_parser:main'],
+        'console_scripts': ['habr_art_stat=habr_art_stat:main'],
     },
 )

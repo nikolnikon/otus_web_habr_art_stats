@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import requests
 import bs4
 import dateparser
 
 
-def fetch_habr_feed(pages=5):
+def fetch_habr_feed(pages=50):
     raw_pages = []
     for page_number in range(pages):
         raw_pages.append(_fetch_habr_page(page_number))
@@ -12,20 +14,6 @@ def fetch_habr_feed(pages=5):
 
 
 def parse_habr_page(raw_page):
-    months_mapping = {
-        'янв': 1,
-        'фев': 2,
-        'мар': 3,
-        'апр': 4,
-        'май': 5,
-        'июн': 6,
-        'июл': 7,
-        'авг': 8,
-        'сен': 9,
-        'окт': 10,
-        'ноя': 11,
-        'дек': 12,
-    }
     articles_info = []
     soup = bs4.BeautifulSoup(raw_page, 'html.parser')
     for article_block in soup.find_all('article', {'class': 'post post_preview'}):
@@ -41,6 +29,6 @@ def parse_habr_page(raw_page):
 def _fetch_habr_page(page_number):
     url = 'https://habr.com/all/'
     if page_number:
-        url += 'page{number}'.format(nubber=page_number)
+        url += 'page{number}'.format(number=page_number)
 
     return requests.get(url).text
