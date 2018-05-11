@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import requests
 import bs4
 import dateparser
+import requests
+
+from habr_art_stat.exceptins import ParseError
 
 
 def fetch_habr_feed(pages=5):
@@ -21,8 +23,9 @@ def parse_habr_page(raw_page):
         date_block = article_block.find('span', {'class': 'post__time'})
         articles_info.append({
             'title': title_block.contents[0],
-            'publication_date_time': dateparser.parse(date_block.text)  # Сделать обработку исключения ValueError
+            'publication_date_time': dateparser.parse(date_block.text)
         })
+
     return articles_info
 
 
@@ -31,4 +34,11 @@ def _fetch_habr_page(page_number):
     if page_number:
         url += 'page{number}'.format(number=page_number)
 
-    return requests.get(url).text
+    try:
+        response = requests.get(url)
+        if 400 <= response.status_code < 600:
+            raise ParseError(response.status_code)
+    except requests.ConnectionError as e:
+        raise ParseError('Ошибка при соединении с habr.com') from e
+
+    return response.text
