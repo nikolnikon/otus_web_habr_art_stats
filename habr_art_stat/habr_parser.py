@@ -5,7 +5,7 @@ import bs4
 import dateparser
 
 
-def fetch_habr_feed(pages=50):
+def fetch_habr_feed(pages=5):
     raw_pages = []
     for page_number in range(pages):
         raw_pages.append(_fetch_habr_page(page_number))
