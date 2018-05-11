@@ -7,7 +7,7 @@ setup(
     name='habr_art_stat',
     version='0.0.1',
     description='Приложение для сбора статистики о словах в статьях habr.com',
-    long_description=open(join(dirname(__file__), 'README.rst')).read(),
+    long_description=open(join(dirname(__file__), 'README.md')).read(),
     author='nikolnikon',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -15,10 +15,10 @@ setup(
     ],
     packages=find_packages(),
     install_requires=[
-        'pymorphy2 ~= 0.0',
-        'requests ~= 2.0',
-        'dateparser ~= 0.0',
-        'bs4 ~= 0.0',
+        'pymorphy2 == 0.8',
+        'requests ~= 2.18.0',
+        'dateparser ~= 0.7.0',
+        'bs4 == 0.0.1',
     ],
     entry_points={
         'console_scripts': ['habr_art_stat=habr_art_stat:main'],

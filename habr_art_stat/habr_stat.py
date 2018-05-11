@@ -10,7 +10,7 @@ def calc_popular_nouns_by_weeks(articles_info, nouns_count=3):
     morph = pymorphy2.MorphAnalyzer()
     words_by_weeks = _group_words_by_weeks(articles_info)
     nouns_by_week = {}
-    for week in words_by_weeks:
+    for week in sorted(words_by_weeks, key=lambda dates: dates[0], reverse=True):
         words = words_by_weeks[week]
         nouns = []
         for word in words:
@@ -22,8 +22,8 @@ def calc_popular_nouns_by_weeks(articles_info, nouns_count=3):
     return nouns_by_week
 
 
-def output_stat(nouns_by_week, nouns_count=3):
-    print('Начало недели | Конец недели | Популярные слова из заголовков    ')
+def output_stat(nouns_by_week):
+    print('\nНачало недели | Конец недели | Популярные слова из заголовков    ')
     print('-----------------------------------------------------------------')
     for week in nouns_by_week:
         nouns = ['{noun}: {freq}'.format(noun=noun[0], freq=noun[1]) for noun in [stat for stat in nouns_by_week[week]]]
